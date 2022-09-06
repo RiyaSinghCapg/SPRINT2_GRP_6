@@ -1,0 +1,91 @@
+../inc/client.h:9: Include file <unistd.h> matches the name of a POSIX library,
+    but the POSIX library is not being used.  Consider using +posixlib or
+    +posixstrictlib to select the POSIX library, or -warnposix to suppress this
+    message.
+  Header name matches a POSIX header, but the POSIX library is not selected.
+  (Use -warnposixheaders to inhibit warning)
+../inc/client.h:10: Include file <sys/stat.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/client.h:11: Include file <sys/types.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/client.h:12: Include file <sys/socket.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/client.h:13: Include file <netinet/in.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/client.h:15: Include file <netdb.h> matches the name of a POSIX library,
+    but the POSIX library is not being used.  Consider using +posixlib or
+    +posixstrictlib to select the POSIX library, or -warnposix to suppress this
+    message.
+../inc/server.h:6: Include file <unistd.h> matches the name of a POSIX library,
+    but the POSIX library is not being used.  Consider using +posixlib or
+    +posixstrictlib to select the POSIX library, or -warnposix to suppress this
+    message.
+../inc/server.h:7: Include file <sys/stat.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/server.h:8: Include file <sys/types.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/server.h:9: Include file <sys/socket.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/server.h:10: Include file <netinet/in.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/server.h:12: Include file <netdb.h> matches the name of a POSIX library,
+    but the POSIX library is not being used.  Consider using +posixlib or
+    +posixstrictlib to select the POSIX library, or -warnposix to suppress this
+    message.
+login.c: (in function login)
+login.c:32:7: Return value (type int) ignored: fputs("Error at ...
+  Result returned by function call is not used. If this is intended, can cast
+  result to (void) to eliminate message. (Use -retvalint to inhibit warning)
+login.c:42:5: Return value (type char *) ignored: fgets(username, ...
+  Result returned by function call is not used. If this is intended, can cast
+  result to (void) to eliminate message. (Use -retvalother to inhibit warning)
+login.c:47:5: Return value (type char *) ignored: fgets(password, ...
+login.c:57:5: Return value (type char *) ignored: fgets(buffer, 30...
+login.c:79:27: Passed storage l.username not completely defined (*(l.username)
+                  is undefined): strcmp (..., l.username)
+  Storage derivable from a parameter, return value or global is not defined.
+  Use /*@out@*/ to denote passed or returned storage which need not be defined.
+  (Use -compdef to inhibit warning)
+login.c:83:9: Return value (type int) ignored: getchar()
+login.c:84:9: Return value (type int) ignored: system("clear")
+login.c:92:5: Return value (type int) ignored: fclose(log)
+login.c: (in function registration)
+login.c:112:10: Return value (type int) ignored: fputs("Error ope...
+login.c:113:11: Argument to exit has implementation defined behavior: 1
+  The argument to exit should be 0, EXIT_SUCCESS or EXIT_FAILURE (Use -exitarg
+  to inhibit warning)
+login.c:120:6: Return value (type int) ignored: system("clear")
+login.c:125:5: Return value (type char *) ignored: fgets(l.username...
+login.c:129:5: Return value (type char *) ignored: fgets(l.password...
+login.c:132:5: Return value (type int) ignored: fputs(l.username...
+login.c:134:5: Return value (type int) ignored: fputs(l.password...
+login.c:137:5: Return value (type int) ignored: fclose(log)
+login.c:144:5: Return value (type int) ignored: getchar()
+login.c:145:5: Return value (type int) ignored: system("clear")
+textToBinary.c: (in function stringToBinary)
+textToBinary.c:11:15: Null storage returned as non-null: 0
+  Function returns a possibly null pointer, but is not declared using
+  /*@null@*/ annotation of result.  If function may return NULL, add /*@null@*/
+  annotation to the return value declaration. (Use -nullret to inhibit warning)
+textToBinary.c:16:5: Index of possibly null pointer binary: binary
+  A possibly null pointer is dereferenced.  Value is either the result of a
+  function which may return null (in which case, code should check it is not
+  null), or a global, parameter or structure field declared with the null
+  qualifier. (Use -nullderef to inhibit warning)
+   textToBinary.c:15:20: Storage binary may become null

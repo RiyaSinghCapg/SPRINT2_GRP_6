@@ -1,0 +1,80 @@
+../inc/server.h:6: Include file <unistd.h> matches the name of a POSIX library,
+    but the POSIX library is not being used.  Consider using +posixlib or
+    +posixstrictlib to select the POSIX library, or -warnposix to suppress this
+    message.
+  Header name matches a POSIX header, but the POSIX library is not selected.
+  (Use -warnposixheaders to inhibit warning)
+../inc/server.h:7: Include file <sys/stat.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/server.h:8: Include file <sys/types.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/server.h:9: Include file <sys/socket.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/server.h:10: Include file <netinet/in.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/server.h:12: Include file <netdb.h> matches the name of a POSIX library,
+    but the POSIX library is not being used.  Consider using +posixlib or
+    +posixstrictlib to select the POSIX library, or -warnposix to suppress this
+    message.
+server.c: (in function main)
+server.c:36:6: Operand of ! is non-boolean (int): !sockfd
+  The operand of a boolean operator is not a boolean. Use +ptrnegate to allow !
+  to be used on pointers. (Use -boolops to inhibit warning)
+server.c:43:2: Unrecognized identifier: bzero
+  Identifier used in code has not been declared. (Use -unrecog to inhibit
+  warning)
+server.c:59:53: Function bind expects arg 3 to be socklen_t gets size_t:
+                   sizeof((serv_addr))
+  Types are incompatible. (Use -type to inhibit warning)
+server.c:79:2: Assignment of size_t to int: clength = sizeof((cli_addr))
+  To allow arbitrary integral types to match any integral type, use
+  +matchanyintegral.
+server.c:87:54: Function accept expects arg 3 to be socklen_t * gets int *:
+                   &clength
+server.c:95:17: Passed storage temp1 not completely defined (*temp1 is
+                   undefined): read (..., temp1, ...)
+  Storage derivable from a parameter, return value or global is not defined.
+  Use /*@out@*/ to denote passed or returned storage which need not be defined.
+  (Use -compdef to inhibit warning)
+server.c:95:2: Return value (type ssize_t) ignored: read(newsockfd, ...
+  Result returned by function call is not used. If this is intended, can cast
+  result to (void) to eliminate message. (Use -retvalother to inhibit warning)
+server.c:96:17: Passed storage key not completely defined (*key is undefined):
+                   read (..., key, ...)
+server.c:96:2: Return value (type ssize_t) ignored: read(newsockfd, ...
+server.c:97:17: Passed storage input not completely defined (*input is
+                   undefined): read (..., input, ...)
+server.c:97:2: Return value (type ssize_t) ignored: read(newsockfd, ...
+server.c:99:2: Assignment of size_t to int: keylen = strlen(key)
+server.c:100:2: Assignment of size_t to int: msglen = strlen(input)
+server.c:112:2: Return value (type int) ignored: scanf("%s", temp2)
+  Result returned by function call is not used. If this is intended, can cast
+  result to (void) to eliminate message. (Use -retvalint to inhibit warning)
+server.c:123:11: Array element temp[0] used before definition
+  An rvalue is used that may not be initialized to a value on some execution
+  path. (Use -usedef to inhibit warning)
+server.c:128:11: Value key1[] used before definition
+server.c:139:13: Passed storage temp not completely defined (*temp is
+                    undefined): strcpy (..., temp)
+server.c:144:15: Value quot[] used before definition
+server.c:164:19: Passed storage quot not completely defined (*quot is
+                    undefined): write (..., quot, ...)
+server.c:164:2: Return value (type ssize_t) ignored: write(newsockfd,...
+server.c:165:2: Return value (type ssize_t) ignored: write(newsockfd,...
+server.c:170:4: Return value (type ssize_t) ignored: write(newsockfd,...
+server.c:174:3: Return value (type ssize_t) ignored: write(newsockfd,...
+server.c:177:2: Return value (type int) ignored: close(sockfd)
+server.c:14:14: Parameter argc not used
+  A function parameter is not used in the body of the function. If the argument
+  is needed for type compatibility or future plans, use /*@unused@*/ in the
+  argument declaration. (Use -paramuse to inhibit warning)
+server.c:14:27: Parameter argv not used
+

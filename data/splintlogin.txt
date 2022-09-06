@@ -1,0 +1,53 @@
+../inc/client.h:9: Include file <unistd.h> matches the name of a POSIX library,
+    but the POSIX library is not being used.  Consider using +posixlib or
+    +posixstrictlib to select the POSIX library, or -warnposix to suppress this
+    message.
+  Header name matches a POSIX header, but the POSIX library is not selected.
+  (Use -warnposixheaders to inhibit warning)
+../inc/client.h:10: Include file <sys/stat.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/client.h:11: Include file <sys/types.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/client.h:12: Include file <sys/socket.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/client.h:13: Include file <netinet/in.h> matches the name of a POSIX
+    library, but the POSIX library is not being used.  Consider using +posixlib
+    or +posixstrictlib to select the POSIX library, or -warnposix to suppress
+    this message.
+../inc/client.h:15: Include file <netdb.h> matches the name of a POSIX library,
+    but the POSIX library is not being used.  Consider using +posixlib or
+    +posixstrictlib to select the POSIX library, or -warnposix to suppress this
+    message.
+client.c: (in function main)
+client.c:18:5: Return value (type int) ignored: scanf("%d", &option)
+  Result returned by function call is not used. If this is intended, can cast
+  result to (void) to eliminate message. (Use -retvalint to inhibit warning)
+client.c:20:5: Return value (type int) ignored: getchar()
+client.c:52:12: Operand of ! is non-boolean (int): !sockfd
+  The operand of a boolean operator is not a boolean. Use +ptrnegate to allow !
+  to be used on pointers. (Use -boolops to inhibit warning)
+client.c:71:63: Function connect expects arg 3 to be socklen_t gets size_t:
+                   sizeof((serv_addr))
+  Types are incompatible. (Use -type to inhibit warning)
+client.c:82:7: Return value (type int) ignored: scanf("%s", str)
+client.c:87:2: Return value (type int) ignored: puts(binary)
+client.c:98:2: Return value (type int) ignored: scanf("%s", key)
+client.c:121:2: Assignment of size_t to int: keylen = strlen(key)
+  To allow arbitrary integral types to match any integral type, use
+  +matchanyintegral.
+client.c:122:2: Assignment of size_t to int: msglen = strlen(input)
+client.c:136:11: Array element temp[0] used before definition
+  An rvalue is used that may not be initialized to a value on some execution
+  path. (Use -usedef to inhibit warning)
+client.c:150:13: Passed storage temp not completely defined (*temp is
+                    undefined): strcpy (..., temp)
+  Storage derivable from a parameter, return value or global is not defined.
+  Use /*@out@*/ to denote passed or returned storage which need not be defined.
+  (Use -compdef to inhibit warning)
+client.c:157:15: Value quot[] used before definition
