@@ -31,7 +31,7 @@ int stringToBinary(char* str, char* binary)
         }
     }
     
-    return FAIL; 
+    return 1; 
     
 }
 
