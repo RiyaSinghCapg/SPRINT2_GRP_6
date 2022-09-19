@@ -24,7 +24,7 @@ void login (void)
     char username[SIZE],password[PASWRD_SIZE];
     
     FILE *log;
-
+    relogin:
     log = fopen("../data/login.txt","r");//opened file in read mode
 
      if (log == NULL)      //if an error occurs, it'll display error message
@@ -36,7 +36,7 @@ void login (void)
 
 
     //accepting username and password
-    relogin:
+    
     printf("\nPlease Enter your login credentials below\n\n");
     printf("Username:  ");
     fgets(username, SIZE, stdin);        
@@ -78,7 +78,7 @@ current_line++;
     
        if(strcmp(username,l.username)==0 && strcmp(password,l.password)==0)
     {       
-            printf("\nSuccessful Login\n");
+        printf("\nSuccessful Login\n");
         printf("\nPress any key to continue\n");
         getchar();
         system("clear");

@@ -16,14 +16,16 @@ int main(int argc, char **argv)
 	int sockfd,newsockfd,clength;		/* declaring the variables for file descriptor,
 			                  	   new file descriptor and for client length */
 	struct sockaddr_in serv_addr,cli_addr;	// declaring the sockaddr_in structure for server and client address
-	char temp2[BUFFER];	//creating the temp2 variable for reciever side 
-	char temp1[BUFFER];	//creating temp char array for reciver side
-	int i,j,keylen=0,msglen=0;
-	char input[BUFFER], temp[SIZE],quot[BUFFER],rem[SIZE];	//input buffer, temp buffer, quotient buffer, remainder size
-	char key[SIZE],key1[SIZE];	//key or divisor char arrays
+	char final_cpy[BUFFER];	//creating the final_cpy variable for reciever side 
+	char final_data[BUFFER];	//creating temp_data char array for reciver side
+	int  keylen=0,msglen=0;
+	char input[BUFFER], temp_data[SIZE],quot[BUFFER],rem[SIZE];	//input buffer, temp_data buffer, quotient buffer, remainder size
+	char key[SIZE],key_cpy[SIZE];	//key or divisor char arrays
 		
-
-		
+	
+	 pid_t childpid; 	// child pid
+	 int status;
+	 	
 	
 	/* creating a socket with three parameters (communication domain, type, protocol)
          * Domain -> AF_INET -- IPv4 (AF_INET6 for IPv6)
@@ -61,8 +63,9 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 	else
-	printf("Binded at port: %d",SERV_TCP_PORT);
-	
+	{
+		printf("Binded at port: %d",SERV_TCP_PORT);
+	}
 	
 	/* listen for incoming connections
 	 * sockfd -> file descriptor socket() returned
@@ -73,8 +76,9 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 	else 
-	printf("\nListening....\n");
-	
+	{
+		printf("\nListening....\n");
+	}
 	
 	clength=sizeof(cli_addr);	// sizeof client address is saved in clength variable
 	
@@ -84,15 +88,23 @@ int main(int argc, char **argv)
          * The addrlen argument is a value-result argument: the caller must initialize it to contain the size (in bytes) of the structure pointed to by addr; 
            on return it will contain the actual size of the client address.
          */
-	newsockfd=accept(sockfd,(struct sockaddr*)&cli_addr,&clength);
+        while(1){
+        
+       	newsockfd=accept(sockfd,(struct sockaddr*)&cli_addr,&clength);
 	
 	if(newsockfd < SUCCESS){
 		perror("error in accept");
 	}
+	if ((childpid = fork()) == 0){
+		
 	
+		
 	
+	memset(&final_data, 0, BUFFER);
+	memset(&key, 0, BUFFER);
+	memset(&input, 0, BUFFER);
 	
-	read(newsockfd,temp1,BUFFER);	//reading the final data(binary + remainder) from client side
+	read(newsockfd,final_data,BUFFER);	//reading the final data(binary + remainder) from client side
 	read(newsockfd,key,BUFFER);	//reading the divisor from client side
 	read(newsockfd,input,BUFFER);	//reading the binary data from client side
 
@@ -102,59 +114,40 @@ int main(int argc, char **argv)
 	int flag=0;
     	 
 	printf("\n");
-	printf("the received data: %s\n",temp1);	// displays the final data from client side to server side
-	//printf("the key: %s\n",key);
+	printf("the received data: %s\n",final_data);	// displays the final data from client side to server side
+	
 	printf("the actual data: %s\n",input);
 	
 	printf("the length: %d\n",msglen);
 	
-	printf("enter data to check: ");	// //prompt a user to enter the received data from client
-	scanf("%s",temp2);	//reading the data
-		
+	//printf("enter data to check: ");	// //prompt a user to enter the received data from client
+	//scanf("%s",final_cpy);	//reading the data
+	strcpy(final_cpy,final_data);	
 	
 /* Cyclic Redundancy Check(CRC) implementation on server side */
 	
-	/*storing the input in temp variable for do division based on length key */
-	for (i=0;i<keylen;i++)
-	 temp[i]=temp2[i];
-	 
-	/* Calculating the quotient and remainder by doing Exclusive-OR */ 
-	for (i=0;i<msglen;i++) {
-		quot[i]=temp[0];
-		if(quot[i]=='0')
-		 for (j=0;j<keylen;j++)
-		 key[j]='0'; else
-		 for (j=0;j<keylen;j++)
-		 key[j]=key1[j];
-		for (j=keylen-1;j>0;j--) {
-			if(temp[j]==key[j])
-			 rem[j-1]='0'; else
-			 rem[j-1]='1';
-		}
-		
-	rem[keylen-1]=temp2[i+keylen];	// character variable rem with size of key length -1
-		strcpy(temp,rem);	// copying the remainder in temp
-	}
-	
-	strcpy(rem,temp);	//again copying the temp to remainder
+	checkCRCServer(final_cpy, temp_data, rem, quot, key, key_cpy, keylen, msglen);
+	strcpy(rem,temp_data);	//again copying the temp_data to remainder
 	
 	/* displays the quotient in screen */
 	printf("\nQuotient is ");
-	for (i=0;i<msglen;i++)
-		printf("%c",quot[i]);
+	for (int msglen_itr=0;msglen_itr<msglen;msglen_itr++)
+		printf("%c",quot[msglen_itr]);
 	 
 	/* displays the Remainder in screen */
 	printf("\nRemainder is ");
-	for (i=0;i<keylen-1;i++)
-		printf("%c",rem[i]);
+	for (int divr_itr=0;divr_itr<keylen-1;divr_itr++)
+		printf("%c",rem[divr_itr]);
 	 
 	 flag=0;	// initializing the flag to 0
 	 
-	 for(i=0;i<keylen-1;i++)	/*loop will iterate for keylength-1 times */
+	 for(int key_itr=0;key_itr<keylen-1;key_itr++)	/*loop will iterate for keylength-1 times */
 	 {
-	 	if(rem[i]=='1')		/* in array of remaiinder if 1 is present, flag 
+	 	if(rem[key_itr]=='1'){	/* in array of remaiinder if 1 is present, flag 
 	 				  is 1 or else it will be 0 */
 	 		flag=1;
+	 		break;
+	 		}
 	 	else
 	 		flag=0;
 	 }
@@ -173,7 +166,97 @@ int main(int argc, char **argv)
 		printf("\nERROR\n");
 		write(newsockfd,"Data received has an error",27);	// writing the server response to the client
 	}
+	
+	
+	/* Below block is to send the negative testing */
+
+	memset(&final_data, 0, BUFFER);
+	memset(&final_cpy, 0, BUFFER);
+	read(newsockfd,final_data,BUFFER);	//reading the final data(binary + remainder) from client side
+	
+	//printf("\ntemp1=%s\n",final_data);
+	if(check_num(final_data) == SUCCESS){
+	
+	
+	keylen=strlen(key);
+	msglen=strlen(input);
+
+	flag=0;
+
+	printf("\n");
+	printf("the received data: %s\n",final_data);	// displays the final data from client side to server side
+	printf("the actual data: %s\n",input);
+
+	strcpy(final_cpy,final_data);	
+	memset(&temp_data, 0, BUFFER);
+	//memset(&rem, 0, BUFFER);
+	//memset(&quot, 0, BUFFER);
+	checkCRCServer(final_cpy, temp_data, rem, quot, key, key_cpy, keylen, msglen);
+	
+	strcpy(rem,temp_data);	//again copying the temp_data to remainder
+
+	/* displays the quotient in screen */
+
+	printf("\nQuotient is ");
+
+	for (int msglen_itr=0;msglen_itr<msglen;msglen_itr++)
+
+		printf("%c",quot[msglen_itr]);
+	 
+	/* displays the Remainder in screen */
+
+	printf("\nRemainder is ");
+
+	for (int divr_itr=0;divr_itr<keylen-1;divr_itr++)
+
+		printf("%c",rem[divr_itr]);
+
+	 flag=0;	// initializing the flag to 0
+
+	 for(int key_itr=0;key_itr<keylen-1;key_itr++)	/*loop will iterate for keylength-1 times */
+
+	 {
+
+	 	if(rem[key_itr]=='1')	{	/* in array of remaiinder if 1 is present, flag 
+	 				  is 1 or else it will be 0 */
+	 		flag=1;
+	 		break;
+	}
+	 	else
+	 		flag=0;
+	 }
+
+	write(newsockfd, quot, BUFFER);	// writing the server response(quotient) to the client
+
+	write(newsockfd, rem, SIZE);	// writing the server response(remainder) to the client
+
+	
+
+	/* if flag is 0 the message has no error or else the message has error */
+
+	if(flag==0){
+
+	 	printf("\n No error\n");
+	 	write(newsockfd,"Data received has no error",27);	// writing the server response to the client
+	 	}
+
+	else{
+
+		printf("\nERROR\n");
+		write(newsockfd,"Data received has an error",27);	// writing the server response to the client
+
+	}
+}
+/* ends the negative testing */
+	_exit(EXIT_SUCCESS);
+	
+}
+
+}
 
 	close(sockfd);	//closing the socket
+	
 	return 0;
 }
+
+

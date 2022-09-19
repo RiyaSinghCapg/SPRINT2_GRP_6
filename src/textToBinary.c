@@ -1,10 +1,10 @@
-                                            /* Converting a string to Binary */
+                                                           /* Converting a string to Binary */
 
 //including user defined header files
 #include <client.h>
 
 /*function call for stringToBinary */
-char* stringToBinary(char* str) 
+int stringToBinary(char* str, char* binary) 
 {
     if(str == NULL) // if str is null it will return 0
     {
@@ -13,16 +13,14 @@ char* stringToBinary(char* str)
     
     size_t len = strlen(str); // calculating the length of string
     
-    char *binary = malloc(len*8 + 1); // each char is one byte (8 bits) and + 1 at the end for null terminator
-    binary[0] = '\0';
-    
+       
     /* Converting the string to binary using bitwise AND &  shift operator */
-    for(size_t i = 0; i < len; ++i) 
+    for(size_t str_length = 0; str_length < len; ++str_length) 
     {
-        char ch = str[i];
-        for(int j = 7; j >= 0; --j)
+        char ch = str[str_length];
+        for(int bit_extract = 7; bit_extract >= 0; --bit_extract)
         {
-            if(ch & (1 << j)) 
+            if(ch & (1 << bit_extract)) 
             {
                 strcat(binary,"1");  // concating the 1 with binary
             } 
@@ -33,7 +31,7 @@ char* stringToBinary(char* str)
         }
     }
     
-    return binary; // return the binary of the string
+    return FAIL; 
     
 }
 
